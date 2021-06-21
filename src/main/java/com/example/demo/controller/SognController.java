@@ -28,6 +28,13 @@ public class SognController {
         return sognList;
     }
 
+    @GetMapping("/select/sogn/smittelist/{id}")
+    public List<Sogn> getSmitteliste(@PathVariable int id) {
+        List<Sogn> sognList = sognRepository.findBySmittetryk(id);
+
+        return sognList;
+    }
+
     //    ====== SELECT ONE SOGN WITH ID =====
     @GetMapping("/select/one/sogn/{id}")
     public Sogn getOneSognWId(@PathVariable int id) {
@@ -51,10 +58,13 @@ public class SognController {
     @PutMapping(value = "/edit/sogn", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public Sogn updateSogn(@RequestBody Sogn sogn){
-        System.out.println("Sogn==="+sogn.getId());
+        System.out.println("Sogn==="+sogn);
         Sogn oneSogn = sognRepository.findById(sogn.getId());
         oneSogn.setSognekode(sogn.getSognekode());
         oneSogn.setSognenavn(sogn.getSognenavn());
+        oneSogn.setLukket(sogn.getLukket());
+        oneSogn.setNedlukning(sogn.getNedlukning());
+        oneSogn.setSmittetryk(sogn.getSmittetryk());
         oneSogn.setId(sogn.getId());
         System.out.println("ONE SOGN ==="+oneSogn.getSognenavn());
 
